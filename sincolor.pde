@@ -2,7 +2,7 @@ import controlP5.*;
 
 ControlP5 cp5;
 
-int SIZE = 500;
+int SIZE = 1000;
 
 int periodicColor(int value, float period, float offset) {
   float p = TWO_PI/period;
@@ -24,7 +24,7 @@ void setup() {
 void initGui() {
   cp5 = new ControlP5(this);
   
-  int SLIDER_MAX = 1000;
+  int SLIDER_MAX = 2000;
   
   cp5.addSlider("red")
      .setPosition(10,20)
@@ -65,5 +65,19 @@ void draw() {
     
     stroke(red, green, blue);
     line(0,i,SIZE,i);
+  }
+}
+
+void randomize() {
+  cp5.getController("red").setValue(random(0,2000));
+  cp5.getController("green").setValue(random(0,2000));
+  cp5.getController("blue").setValue(random(0,2000));
+}
+
+void keyPressed() {
+  if (key == ' ') {
+    randomize();
+  } else if (key == 's') {
+    saveFrame("image-####.png");
   }
 }
