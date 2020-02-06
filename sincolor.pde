@@ -6,6 +6,7 @@ SinOsc[] oscillators = new SinOsc[3];
 
 int SIZE = 750;
 int SLIDER_MAX = 2000;
+float PAN = 1.0;
 
 int periodicColor(int value, float period, float offset) {
   float p = TWO_PI/(SLIDER_MAX - period);
@@ -29,17 +30,18 @@ void setup() {
   initSound();
 }
 
-void initOscillator(int id, float freq) {
+void initOscillator(int id, float freq, float pan) {
   oscillators[id] = new SinOsc(this);
   oscillators[id].freq(freq);
   oscillators[id].amp(0.5);
+  oscillators[id].pan(pan);
   oscillators[id].play();
 }
 
 void initSound() {
-  initOscillator(0, 100.0);
-  initOscillator(1, 100.2);
-  initOscillator(2, 100.4);
+  initOscillator(0, 100.0, -PAN);
+  initOscillator(1, 100.2, 0);
+  initOscillator(2, 100.4, PAN);
 }
 
 void initGui() {
