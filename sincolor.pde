@@ -8,7 +8,7 @@ int SIZE = 750;
 int SLIDER_MAX = 2000;
 
 int periodicColor(int value, float period, float offset) {
-  float p = TWO_PI/period;
+  float p = TWO_PI/(SLIDER_MAX - period);
   float x = sin(value*p + offset);
   float y = map(x,-1,1,0,255);
   return round(y);
