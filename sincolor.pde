@@ -1,8 +1,11 @@
 import controlP5.*;
+import processing.sound.*;
 
 ControlP5 cp5;
+SinOsc[] oscillators = new SinOsc[3];
 
 int SIZE = 750;
+int SLIDER_MAX = 2000;
 
 int periodicColor(int value, float period, float offset) {
   float p = TWO_PI/period;
@@ -20,14 +23,27 @@ void settings() {
 }
 
 void setup() {
-  initGui();
   surface.setSize(SIZE, SIZE);
+  
+  initGui();
+  initSound();
+}
+
+void initOscillator(int id, float freq) {
+  oscillators[id] = new SinOsc(this);
+  oscillators[id].freq(freq);
+  oscillators[id].amp(0.5);
+  oscillators[id].play();
+}
+
+void initSound() {
+  initOscillator(0, 100.0);
+  initOscillator(1, 100.2);
+  initOscillator(2, 100.4);
 }
 
 void initGui() {
   cp5 = new ControlP5(this);
-  
-  int SLIDER_MAX = 2000;
   
   cp5.addSlider("red")
      .setPosition(10,20)
@@ -52,16 +68,15 @@ void initGui() {
 }
 
 void draw() {
-  float a = 0.0;
-  float period = TWO_PI/250.0;
+  float redVal = cp5.getController("red").getValue();
+  float greenVal = cp5.getController("green").getValue();
+  float blueVal = cp5.getController("blue").getValue();
+  
+  oscillators[0].freq(redVal);
+  oscillators[1].freq(greenVal);
+  oscillators[2].freq(blueVal);
   
   for (int i = 0; i < SIZE; i = i + 1) {
-    float x = sin(i*period);
-    
-    float redVal = cp5.getController("red").getValue();
-    float greenVal = cp5.getController("green").getValue();
-    float blueVal = cp5.getController("blue").getValue();
-    
     int red = periodicColor(i, redVal);
     int green = periodicColor(i, greenVal);
     int blue = periodicColor(i, blueVal);
