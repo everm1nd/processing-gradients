@@ -2,7 +2,7 @@ import controlP5.*;
 
 ControlP5 cp5;
 
-int SIZE = 1000;
+int SIZE = 750;
 
 int periodicColor(int value, float period, float offset) {
   float p = TWO_PI/period;
@@ -15,10 +15,13 @@ int periodicColor(int value, float period) {
   return periodicColor(value, period, 0);
 }
 
-void setup() {
+void settings() {
   size(SIZE,SIZE);
-  
+}
+
+void setup() {
   initGui();
+  surface.setSize(SIZE, SIZE);
 }
 
 void initGui() {
